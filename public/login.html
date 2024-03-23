@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaumAsk!</title>
+    <link rel="stylesheet" href="../static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="../static/logo.ico" type="image/x-icon" >
+    <link rel="stylesheet" type="text/css" href="../static/file.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-#271007">
+        <a class="btn" href="index.html" role="button">
+            <img src="../static/logo.ico" style="width: 30px; height: 30px; border-radius: 50%;">
+        </a>
+        <a class="navbar-brand" href="index.html" style="font-weight: bold; color:#fff">BaumAsk!</a>
+        <a href="ask.html" style="font-weight: bold; color:#fff; margin-left: 265px;">Задать вопрос</a>
+        <a class="btn" href="ask.html" role="button">
+          <img src="../static/quest.jpg" style="width: 30px; height: 30px; border-radius: 50%;">
+        </a>
+        <form class="form-inline my-2 my-lg-0 ml-auto">
+          <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
+          <button class="btn btn-my my-2 my-sm-0" type="submit">Найти!</button>
+        </form>
+        <div class="dropdown ml-auto">
+            <a class="btn dropdown-toggle" href="#" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="../static/avatar.jpg" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="login.html">Вход</a>
+                <a class="dropdown-item" href="signup.html">Регистрация</a>
+            </div>
+        </div>
+        <span class="navbar-text text-white">Авторизируйтесь</span>
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+</header>
+
+
+<body>
+
+    <main class="container"  role="main">
+
+      <div class="row" >
+        <div class="col-3">
+                    <div class="row"  style="margin-top: 10px; ">
+                            <div class="col-9" style="border: 1px solid #271007; border-radius: 5px; background-color: #ECCDB1; margin-bottom: 7px; margin-left: 15px;">
+                                <h3> Частые Теги: </h3>
+                            </div>
+                    </div>
+                    <div class="list-group">
+                      <a href="tagind.html" class="list-group-item list-group-item-action">VK</a>
+                      <a href="tagind.html" class="list-group-item list-group-item-action">Ассемблер</a>
+                      <a href="tagind.html" class="list-group-item list-group-item-action">Дима Кошенков</a>
+                      <a href="tagind.html" class="list-group-item list-group-item-action">Ruby</a>
+                    </div>
+                  <div class="row"  style="margin-top: 10px; ">
+                    <div class="col-9" style="border: 1px solid #271007; border-radius: 5px; background-color: #ECCDB1; margin-bottom: 7px; margin-left: 15px;">
+                        <h3> БестБрейнс: </h3>
+                    </div>
+                  </div>
+                  <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">Иванова Галина</a>
+                    <a href="#" class="list-group-item list-group-item-action">Кто-то</a>
+                    <a href="#" class="list-group-item list-group-item-action">Дима Кошенков</a>
+                    <a href="#" class="list-group-item list-group-item-action">Аркадий Паровозов</a>
+                  </div>
+                  
+        </div>
+        <div class="col-7">
+            <div class="row" style="margin-left: 75px;">
+                <div class="col-6" style="border: 1px solid #271007; border-radius: 5px; vertical-align: center; background-color: #ECCDB1; margin-top: 10px; margin-bottom: 10px;">
+                    <h3><strong>Авторизируйтесь:</strong></h3>
+                </div>
+              </div>
+            <div class="ans" style="margin-left: 70px;">
+                <form class="was-validated">
+                    <div class="rowplus" style="height: 80px; display: flex; align-items: center;">
+                        <div class="col-2">
+                            <label for="InputPassword" class="my-label" style="margin-top: -3px;">Логин</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="InputLogin" placeholder="..."
+                            name="InputLogin" maxlength="200" required style="background-color: #ECCDB1;">
+                            <div class="invalid-feedback" style="color: black; margin-left: 340px; margin-top:-20px;text-decoration: underline;">
+                                Введите логин
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="rowplus" style="height: 80px; display: flex; align-items: center;">
+                        <div class="col-2">
+                            <label for="InputPassword" class="my-label">Пароль</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="password" class="form-control" id="InputPassword" placeholder="..."
+                            name="InputPassword" maxlength="200" required style="background-color: #ECCDB1;">
+                            <div class="invalid-feedback" style="color: black; margin-left: 340px; margin-top:-20px;text-decoration: underline;">
+                                Введите пароль
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-my" type="submit" style="margin-left: 485px; margin-top: -20px;">Войти</button>
+                    </div>
+    
+                </form>
+            </div>
+            <div class="row" style="margin-left: 75px;">
+                <a href="signup.html" style="color: #fff; font-weight: bold;">Создать новый аккаунт</a>
+            </div>
+        </div>
+        
+      </div>
+
+    </main>
+
+</body>
+</html>
