@@ -91,10 +91,10 @@
                             </div>
                     </div>
                     <div class="list-group">
-                      <a href="{% url 'tagind' 'VK' %}" class="list-group-item list-group-item-action">VK</a>
-                      <a href="{% url 'tagind' 'Ассемблер' %}" class="list-group-item list-group-item-action">Ассемблер</a>
-                      <a href="{% url 'tagind' 'Дима Кошенков' %}" class="list-group-item list-group-item-action">Дима Кошенков</a>
-                      <a href="{% url 'tagind' 'Ruby' %}" class="list-group-item list-group-item-action">Ruby</a>
+                      <a href="{% url 'tagind' tags.0.0 %}" class="list-group-item list-group-item-action">{{ tags.0.0 }}</a>
+                      <a href="{% url 'tagind' tags.1.0 %}" class="list-group-item list-group-item-action">{{ tags.1.0 }}</a>
+                      <a href="{% url 'tagind' tags.2.0 %}" class="list-group-item list-group-item-action">{{ tags.2.0 }}</a>
+                      <a href="{% url 'tagind' tags.3.0 %}" class="list-group-item list-group-item-action">{{ tags.3.0 }}</a>
                     </div>
                   <div class="row"  style="margin-top: 10px; ">
                     <div class="col-9" style="border: 1px solid #271007; border-radius: 5px; background-color: #ECCDB1; margin-bottom: 7px; margin-left: 15px;">

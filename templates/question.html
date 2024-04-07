@@ -1,0 +1,63 @@
+{% extends 'parent/base.html' %}
+{% block content %}
+{% load static %}
+
+        <div class = "col-9" >
+
+                          {% include 'components/question-item.html' %}
+
+
+            <div class = "ans">
+                {% for answer in answers%}
+                            <div class="rowplusans">
+                                <div class="col-2">
+                                    
+                                    <img src="{% static '/avatar.jpg'%}" height="110px" width="110px"
+                                        style="border: 1px solid black; object-fit: cover; margin-top: 20px; margin-bottom: 20px; margin-left: 2px;">
+                                
+                                </div>
+                                <div class="col-9">
+                                        <div class="row">
+                                                <a href="#" style="font-size: 20px; text-decoration: underline; color:rgb(5, 5, 113); font-weight: bold;">Ответ {{ answer.id }}
+                                                </a>
+                                        </div>
+                                        <div class="row">
+                                                <div style="font-size: 17px; color:black">{{answer.text}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-9" style="margin-left: 350px; margin-top: 20px; position: relative;">
+                                                <input type="checkbox" id="myCheckbox" >
+                                                <label for="myCheckbox">Правильный ответ</label>
+
+                                            <div style="display: inline-block; background-color: beige; padding: 5px; border-radius: 5px; margin-bottom: 15px">
+                                                        <button type="button" class="btn btn-success btn-icon" style="line-height: 6px; width: 40px">
+                                                            <span class="icon">
+                                                                <i class="fa fa-heart" style="vertical-align: middle;"></i>
+                                                            </span>
+                                                        </button>
+                                                        <span style="margin-left: 1px; color: #ba2121">{{answer.rating_count}}</span>
+                                                        <button type="button" class="btn btn-danger btn-icon" style="line-height: 6px; width: 40px">
+                                                            <span class="icon">
+                                                                <i class="fa fa-thumbs-down" style="vertical-align: middle;"></i>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                {% endfor %}
+
+                          {% include 'components/paginatorans-item.html' %}
+                
+            </div>
+
+            <div class="row">
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Напишите свой ответ" style="background-color: #ECCDB1;"></textarea>
+                <button class="btn btn-my" style="margin-top: 5px; margin-left: 760px;">Ответить</button>
+            </div>
+            
+
+
+        </div>
+{% endblock %}
