@@ -4,8 +4,6 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from .models import Question, QuestionRating, Tag, Profile, AnswerRating, Answer
 
-questions = Question.objects.new_questions_list()
-tag_list = Counter(Tag.objects.values_list('tag', flat=True)).most_common(4)
 
 def paginate(objects, page, per_page=4):
     paginator = Paginator(objects, per_page)
@@ -19,6 +17,8 @@ def paginateans(objects, page, per_page=2):
 
 
 def index(request):
+    questions = Question.objects.new_questions_list()
+    tag_list = Counter(Tag.objects.values_list('tag', flat=True)).most_common(4)
     page = request.GET.get('page')
     if not page:
         page = 1
@@ -26,6 +26,7 @@ def index(request):
 
 
 def question(request, q_id):
+    tag_list = Counter(Tag.objects.values_list('tag', flat=True)).most_common(4)
     page = request.GET.get('page')
     if not page:
         page = 1
@@ -34,9 +35,11 @@ def question(request, q_id):
     return render(request, 'question.html', {'question':element, 'answers':paginateans(ans, int(page)), 'tags':tag_list})
 
 def ask(request):
+    tag_list = Counter(Tag.objects.values_list('tag', flat=True)).most_common(4)
     return render(request, 'ask.html', {'tags':tag_list})
 
 def tagind(request, t_ind):
+    tag_list = Counter(Tag.objects.values_list('tag', flat=True)).most_common(4)
     page = request.GET.get('page')
     filtered_questions = Question.objects.find_by_tag(t_ind)
     if not page:
@@ -44,18 +47,22 @@ def tagind(request, t_ind):
     return render(request, 'tagind.html', {'questions': paginate(filtered_questions, int(page)), 'tag':t_ind, 'tags':tag_list})
 
 def settings(request):
+    tag_list = Counter(Tag.objects.values_list('tag', flat=True)).most_common(4)
     return render(request, 'settings.html', {'tags':tag_list})
 
 def login(request):
+    tag_list = Counter(Tag.objects.values_list('tag', flat=True)).most_common(4)
     logout = True
     return render(request, 'login.html', {'logout':logout, 'tags':tag_list})
 
 def signup(request):
+    tag_list = Counter(Tag.objects.values_list('tag', flat=True)).most_common(4)
     logout = True
     return render(request, 'signup.html', {'logout':logout, 'tags':tag_list})
 
 
 def show_hot(request):
+    tag_list = Counter(Tag.objects.values_list('tag', flat=True)).most_common(4)
     questionshot = Question.objects.hot_questions_list()
     hot = True
     page = request.GET.get('page')
