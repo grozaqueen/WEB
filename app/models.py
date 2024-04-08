@@ -90,6 +90,9 @@ class QuestionRating(models.Model):
 
     objects = QuestionRatingManager()
 
+    class Meta:
+        unique_together = ['profile', 'post']
+
 
 class AnswerRatingManager(models.Manager):
     def search(self, answer_id, profile_id):
@@ -105,3 +108,6 @@ class AnswerRating(models.Model):
     post = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
     objects = AnswerRatingManager()
+
+    class Meta:
+        unique_together = ['profile', 'post']

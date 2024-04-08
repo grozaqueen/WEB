@@ -87,25 +87,35 @@ class Command(BaseCommand):
         answers = Answer.objects.all()
 
         question_ratings = []
+        unique_pairs1 = set()
         for i in range(num * 100 + 1):
             mark = -1 if fake.random_int(min=0, max=100) % 4 == 0 else 1
             profile = profiles[fake.random_int(min=0, max=num - 1)]
             post = questions[i%(num * 10 - 1)] if i < num * 10 else questions[fake.random_int(min=0, max=num * 10 - 1)]
+            pair = (profile.id, post.id)
 
-            question_rating = QuestionRating(mark=mark, profile=profile, post=post)
-            question_ratings.append(question_rating)
+            if pair not in unique_pairs1:
+                unique_pairs1.add(pair)
+                question_rating = QuestionRating(mark=mark, profile=profile, post=post)
+                question_ratings.append(question_rating)
 
         QuestionRating.objects.bulk_create(question_ratings)
         self.stdout.write("Completed with Question ratings")
 
         answer_ratings = []
+        unique_pairs = set()
+
         for i in range(num * 100 + 1):
             mark = -1 if fake.random_int(min=0, max=100) % 4 == 0 else 1
             profile = profiles[fake.random_int(min=0, max=num - 1)]
             post = answers[i] if i < num * 100 else answers[fake.random_int(min=0, max=100 * num - 1)]
 
-            answer_rating = AnswerRating(mark=mark, profile=profile, post=post)
-            answer_ratings.append(answer_rating)
+            pair = (profile.id, post.id)
+
+            if pair not in unique_pairs:
+                unique_pairs.add(pair)
+                answer_rating = AnswerRating(mark=mark, profile=profile, post=post)
+                answer_ratings.append(answer_rating)
 
         AnswerRating.objects.bulk_create(answer_ratings)
         self.stdout.write("Completed with Answer ratings")
