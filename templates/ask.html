@@ -2,44 +2,51 @@
 {% block content %}
 {% load static %}
 
-
-                                        <div class = "col-8" > 
-                                          <div class="row">
-                                            <div class="col-4" style="border: 1px solid #271007; border-radius: 5px; vertical-align: center; background-color: #ECCDB1; margin-top: 10px; margin-bottom: 10px;">
-                                                <h3><strong>Новый вопрос:</strong></h3>
-                                            </div>
-                                          </div>
-                                            <form class="was-validated">
-                                              <div class="row">
-                                                  <label for="InputTitle" class="my-label">Заголовок</label>
-                                                  <input type="text" class="form-control" id="InputTitle" placeholder="Как сварить борщ?"
-                                                      name="InputTitle" maxlength="70" required style="background-color: #ECCDB1;">
-                                                  <div class="invalid-feedback" style="margin-left: 480px; background-color: #CDB3A4; font-weight: bold; text-decoration: underline;">
-                                                      Введите заголовок (не более 70 символов)
-                                                  </div>
-                                              </div>
-                                              <div class="row">
-                                                  <label for="InputTextarea" class="my-label">Содержание</label>
-                                                  <textarea class="form-control" id="InputTextarea" name="InputTextarea" maxlength="500" placeholder="А как? Не понял..."
-                                                      required style="height: 300px; background-color: #ECCDB1;"></textarea>
-                                                  <div class="invalid-feedback" style="margin-left: 405px; background-color: #CDB3A4; font-weight: bold; text-decoration: underline;">
-                                                     Введите содержание вопроса (не более 500 символов)
-                                                  </div>
-                                              </div>
-                                              <div class="row">
-                                                  <label for="InputTags" class="my-label">Теги</label>
-                                                  <input type="text" class="form-control" id="InputTags" placeholder="Как, Борщ, Еда"
-                                                      name="InputTags" maxlength="50" required style="background-color: #ECCDB1;">
-                                                  <div class="invalid-feedback" style="margin-left: 420px; background-color: #CDB3A4; font-weight: bold; text-decoration: underline;">
-                                                     Введите теги (не более 50 символов, через запятую)
-                                                  </div>
-                                              </div>
-                                              <div class="row">
-                                                  <button class="btn btn-my" type="submit">Опубликовать</button>
-                                              </div>
-                  
-                                          </form>
-                                            
-                                        </div>
-
+        <div class = "col-8" >
+          <div class="row">
+            <div class="col-4" style="border: 1px solid #271007; border-radius: 5px; vertical-align: center; background-color: #ECCDB1; margin-top: 10px; margin-bottom: 10px;">
+                <h3><strong>Новый вопрос:</strong></h3>
+            </div>
+          </div>
+             <form method="post">
+                {% csrf_token %}
+                  <div class="row">
+                      <label for="InputTitle" class="my-label">Заголовок</label>
+                      {{ form.title }}
+                      <div style="margin-left: 480px; background-color: #CDB3A4; font-weight: bold; text-decoration: underline; font-size: 12px;">
+                            Введите заголовок (не более 70 символов)
+                        </div>
+                  </div>
+                  <div class="row">
+                      <label for="InputTextarea" class="my-label">Содержание</label>
+                      {{ form.text }}
+                      <div style="margin-left: 480px; background-color: #CDB3A4; font-weight: bold; text-decoration: underline; font-size: 12px;">
+                         Введите содержание вопроса (не более 500 символов)
+                      </div>
+                  </div>
+                  <div class="row">
+                      <label for="InputTags" class="my-label">Теги</label>
+                      {{ form.tags }}
+                      <div style="margin-left: 480px; background-color: #CDB3A4; font-weight: bold; text-decoration: underline; font-size: 12px;">
+                         Введите теги (не более 50 символов, через запятую)
+                      </div>
+                  </div>
+                  <div class="row" style="margin-top: 10px">
+                      <button class="btn btn-my" type="submit">Опубликовать</button>
+                  </div>
+          </form>
+            {% if form.errors %}
+              <div class="alert alert-danger" style="margin-top: 10px">
+                <ul>
+                  {% for field in form %}
+                  {% if field.errors %}
+                  {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+                {% endif %}
+ </div>
 {% endblock %}

@@ -48,7 +48,7 @@ html {
 }
      body {
        margin-bottom: 40px;
-  background-image: url(../static/background.jpg);
+       background-image: url(background.jpg);
      }
      main {
        margin-top: 15px;

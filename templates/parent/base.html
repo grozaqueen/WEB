@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -61,16 +60,20 @@
                 </div>
                 </div>
             <span class="navbar-text text-white"> Авторизируйтесь!</span>
-                 {%else%}
-            <img src="{% static '/avatar.jpg' %}" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
-                </a>
-
+                {%else%}
+                   {% with user.profile as profile %}
+                    {% if profile.avatar == "avatar.jpg" %}
+                        <img src="{% static '/avatar.jpg' %}" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                    {% else %}
+                        <img src="{% static profile.avatar %}" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                    {% endif %}
+                    {% endwith %}
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="{% url 'settings' %}">Настройки</a>
-                    <a class="dropdown-item" href="{% url 'login' %}">Выход</a>
+                    <a class="dropdown-item" href="{% url 'exit' %}">Выход</a>
                 </div>
                 </div>
-            <span class="navbar-text text-white"> Привет, Пользователь!</span>
+            <span class="navbar-text text-white"> Привет, {{ name }}!</span>
                  {%endif%}
 
 

@@ -11,14 +11,17 @@
                 {% for answer in answers%}
                             <div class="rowplusans">
                                 <div class="col-2">
-                                    
-                                    <img src="{% static '/avatar.jpg'%}" height="110px" width="110px"
+                                        {% if answer.profile.avatar == "avatar.jpg" %}
+                                            <img src="{% static '/avatar.jpg'%}" height="110px" width="110px"
                                         style="border: 1px solid black; object-fit: cover; margin-top: 20px; margin-bottom: 20px; margin-left: 2px;">
-                                
+                                        {% else %}
+                                            <img src="{% static answer.profile.avatar %}" height="110px" width="110px"
+                                        style="border: 1px solid black; object-fit: cover; margin-top: 20px; margin-bottom: 20px; margin-left: 2px;">
+                                        {% endif %}
                                 </div>
                                 <div class="col-9">
                                         <div class="row">
-                                                <a href="#" style="font-size: 20px; text-decoration: underline; color:rgb(5, 5, 113); font-weight: bold;">Ответ {{ answer.id }}
+                                                <a href="#" style="font-size: 20px; text-decoration: underline; color:rgb(5, 5, 113); font-weight: bold;">{{ answer.profile.user.username }} считает:
                                                 </a>
                                         </div>
                                         <div class="row">
@@ -53,8 +56,11 @@
             </div>
 
             <div class="row">
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Напишите свой ответ" style="background-color: #ECCDB1;"></textarea>
-                <button class="btn btn-my" style="margin-top: 5px; margin-left: 760px;">Ответить</button>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.text }}
+                    <button class="btn btn-my" style="margin-top: 5px; margin-left: 760px;">Ответить</button>
+                </form>
             </div>
             
 

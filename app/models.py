@@ -9,12 +9,13 @@ from django.db.models.functions import Coalesce
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(null=True, blank=True, default='avatar.jpg', upload_to='avatar/%Y/%m/%d')
+    avatar = models.ImageField(null=True, blank=True, default='avatar.jpg', upload_to='avatars/')
     login = models.CharField(max_length=30)
 
 
 class Tag(models.Model):
     tag = models.CharField(max_length=20)
+
 
 class QuestionManager(models.Manager):
     def new_questions_list(self):

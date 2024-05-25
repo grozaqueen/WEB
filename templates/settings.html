@@ -2,7 +2,6 @@
 {% block content %}
 {% load static %}
 
-
         <div class="col-7">
             <div class="row" style="margin-left: 75px; align-items: center;">
                 <div class="col-4" style="border: 1px solid #271007; border-radius: 5px; vertical-align: center; background-color: #ECCDB1; margin-top: 10px; margin-bottom: 10px;">
@@ -10,71 +9,82 @@
                 </div>
               </div>
             <div class="ans" style="margin-left: 70px;">
-                <form class="was-validated">
+                <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                     <div class="rowplus" style="height: 80px; display: flex; align-items: center;">
                         <div class="col-2">
                             <label for="InputLogin" class="my-label" style="margin-top: -3px;">Логин</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" id="InputLogin" placeholder="pasha.ru"
-                            name="InputLogin" maxlength="200" required style="background-color: #ECCDB1;">
+                            {{ form.username }}
                             <div class="invalid-feedback" style="color: black; margin-left: 340px; margin-top:-20px;text-decoration: underline;">
                                 Введите логин
                             </div>
                             <p style="font-size: 10px;">Формат: A-Z, a-z</p>
                         </div>
-                        
+
                     </div>
                     <div class="rowplus" style="height: 80px; display: flex; align-items: center;">
                         <div class="col-2">
                             <label for="InputPochta" class="my-label" style="margin-top: -3px;">Email</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" id="InputPochta" placeholder="pasha@mail.ru"
-                            name="InputPochta" maxlength="200" required style="background-color: #ECCDB1;">
+                            {{ form.email }}
                             <div class="invalid-feedback" style="color: black; margin-left: 340px; margin-top:-20px;text-decoration: underline;">
                                 Введите почту
                             </div>
                             <p style="font-size: 10px;">Формат: pasha@mail.ru</p>
                         </div>
-                        
+
                     </div>
                     <div class="rowplus" style="height: 80px; display: flex; align-items: center;">
                         <div class="col-2">
                             <label for="InputNick" class="my-label" style="margin-top: -3px;">Ник</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" id="InputNick" placeholder="pashokSnezhok"
-                            name="InputNick" maxlength="200" required style="background-color: #ECCDB1;">
+                            {{ form.nickname }}
                             <div class="invalid-feedback" style="color: black; margin-left: 340px; margin-top:-20px;text-decoration: underline;">
                                 Введите Ник
                             </div>
                             <p style="font-size: 10px;">Формат: A-Z, a-z; А-Я, а-я</p>
                         </div>
-                        
+
                     </div>
                     <div class="rowplus" style="height: 80px; display: flex; align-items: center;">
-                        <div class="col-2">
-                                    
-                            <img src="{% static '/avatar.jpg' %}" height="70px" width="70px"
-                                style="border: 1px solid black; object-fit: cover; margin-top: 0px; margin-bottom: 0px; margin-left: 0px;">
-                            
-                        </div>
                     <div class="form-group">
                         <label for="InputAvatar" class="my-label">Загрузите аватар в формате .png, .jpg</label>
-                        <input type="file" class="form-control-file" id="InputAvatar"
-                            accept="image/png, image/jpeg">
+                        {{ form.avatar }}
                     </div>
                 </div>
                     <div class="row">
-                        <button class="btn btn-my" type="submit" style="margin-left: 460px; margin-top: -20px;">Обновить</button>
+                        <button class="btn btn-my" type="submit" style="margin-left: 380px; margin-top: -20px;">Сохранить изменения</button>
                     </div>
-    
                 </form>
+
             </div>
-             <div id="errorMessage" style="border: 1px solid red; background-color: #f8d7da; color: red; padding: 10px; margin-top: 10px; margin-left: 70px; display: none;">
-                    Пользователь с такой почтой уже существует!
-                </div>
+             {% if form.errors %}
+              <div class="alert alert-danger">
+                <ul>
+                  {% for field in form %}
+                  {% if field.errors %}
+                  {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                  {% endfor %}
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+                {% endif %}
+        {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <div class="alert-success">
+            <li>{{ message }}</li>
+            </div>
+        {% endfor %}
+    </ul>
+{% endif %}
+
         </div>
         
 {% endblock %}

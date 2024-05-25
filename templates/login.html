@@ -9,14 +9,14 @@
                 </div>
               </div>
             <div class="ans" style="margin-left: 70px;">
-                <form class="was-validated">
+                <form method="post">
+                {% csrf_token %}
                     <div class="rowplus" style="height: 80px; display: flex; align-items: center;">
                         <div class="col-2">
                             <label for="InputPassword" class="my-label" style="margin-top: -3px;">Логин</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" class="form-control" id="InputLogin" placeholder="pasha.ru"
-                            name="InputLogin" maxlength="200" required style="background-color: #ECCDB1;">
+                             {{ form.username }}
                             <div class="invalid-feedback" style="color: black; margin-left: 340px; margin-top:-20px;text-decoration: underline;">
                                 Введите логин
                             </div>
@@ -29,8 +29,7 @@
                             <label for="InputPassword" class="my-label">Пароль</label>
                         </div>
                         <div class="col-8">
-                            <input type="password" class="form-control" id="InputPassword" placeholder="***"
-                            name="InputPassword" maxlength="200" required style="background-color: #ECCDB1;">
+                            {{ form.password }}
                             <div class="invalid-feedback" style="color: black; margin-left: 340px; margin-top:-20px;text-decoration: underline;">
                                 Введите пароль
                             </div>
@@ -47,9 +46,11 @@
             <div class="row" style="margin-left: 75px;">
                 <a href="{% url 'signup' %}" style="color: #fff; font-weight: bold;">Создать новый аккаунт</a>
             </div>
-            <div id="errorMessage" style="border: 1px solid red; background-color: #f8d7da; color: red; padding: 10px; margin-top: 10px; margin-left: 70px; display: none;">
-                    Неправильный логин или пароль!
-                </div>
+            {% if form.errors %}
+            <div class="alert alert-danger" style="margin-top: 10px;">
+                  <strong>Пользователь с такими данными не найден</strong><br>
+            </div>
+            {% endif %}
         </div>
         
 {% endblock %}
