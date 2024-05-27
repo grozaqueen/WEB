@@ -80,6 +80,8 @@ class Answer(models.Model):
 
 
 class QuestionRatingManager(models.Manager):
+    def search(self, question_id, profile_id):
+        return self.filter(post=question_id, profile=profile_id).first()
     def search_by_mark(self, question_id, mark):
         return self.filter(post=question_id, mark=mark)
 
@@ -98,6 +100,9 @@ class QuestionRating(models.Model):
 class AnswerRatingManager(models.Manager):
     def search(self, answer_id, profile_id):
         return self.filter(post=answer_id, profile=profile_id).first()
+
+    def search1(self, profile_id):
+        return self.filter(profile=profile_id)
 
     def search_by_mark(self, answer_id, mark):
         return self.filter(post=answer_id, mark=mark)

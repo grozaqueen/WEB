@@ -30,24 +30,23 @@
                                             <div class="row">
                                                     <div style="font-size: 17px; color:black">{{question.text}}</div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row like-questions-list" data-id="{{ question.pk }}">
                                                 <div class="col-4" style="margin-left: 470px; margin-top: 20px; position: relative;">
                                                     <div style="display: inline-block; background-color: beige; padding: 5px; border-radius: 5px; margin-bottom: 15px">
-                                                        <button type="button" class="btn btn-success btn-icon" style="line-height: 6px; width: 40px">
-                                                            <span class="icon">
-                                                                <i class="fa fa-heart" style="vertical-align: middle;"></i>
-                                                            </span>
-                                                        </button>
-                                                        <span style="margin-left: 1px; color: #ba2121">{{question.rating_count}}</span>
-                                                        <button type="button" class="btn btn-danger btn-icon" style="line-height: 6px; width: 40px">
+                                                        <button type="button" class="btn btn-danger btn-icon like-btn" data-question-id="{{ question.id }}" style="line-height: 6px; width: 40px">
                                                             <span class="icon">
                                                                 <i class="fa fa-thumbs-down" style="vertical-align: middle;"></i>
                                                             </span>
                                                         </button>
+                                                        <span style="margin-left: 1px; color: #ba2121" id="rating-count-{{ question.id }}">{{ question.rating_count }}</span>
+                                                        <button type="button" class="btn btn-success btn-icon dislike-btn" data-question-id="{{ question.id }}" style="line-height: 6px; width: 40px">
+                                                            <span class="icon">
+                                                                <i class="fa fa-heart" style="vertical-align: middle;"></i>
+                                                            </span>
+                                                        </button>
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                   </div>
+
                             </div>

@@ -27,21 +27,38 @@
                                         <div class="row">
                                                 <div style="font-size: 17px; color:black">{{answer.text}}</div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-9" style="margin-left: 350px; margin-top: 20px; position: relative;">
-                                                <input type="checkbox" id="myCheckbox" >
+                                        <div class="row like-answer-list" data-id="{{ answer.pk }}">
+                                            {% if answer.is_correct %}
+                                            {% if request.user.profile == answer.question.profile %}
+                                            <div class="col-9" data-id="{{ answer.pk }}" style="margin-left: 350px; margin-top: 20px; position: relative;">
+                                                <input type="checkbox" id={{ answer.pk }} checked>
                                                 <label for="myCheckbox">Правильный ответ</label>
-
+                                            {% else %}
+                                                <div class="col-9" data-id="{{ answer.pk }}" style="margin-left: 350px; margin-top: 20px; position: relative;">
+                                                <input type="checkbox" id={{ answer.pk }} disabled checked>
+                                                <label for="myCheckbox">Правильный ответ</label>
+                                            {% endif %}
+                                            {% else %}
+                                        {% if request.user.profile == answer.question.profile %}
+                                            <div class="col-9" data-id="{{ answer.pk }}" style="margin-left: 350px; margin-top: 20px; position: relative;">
+                                                <input type="checkbox" id={{ answer.pk }}>
+                                                <label for="myCheckbox">Правильный ответ</label>
+                                            {% else %}
+                                                <div class="col-9" data-id="{{ answer.pk }}" style="margin-left: 350px; margin-top: 20px; position: relative;">
+                                                <input type="checkbox" id={{ answer.pk }} disabled>
+                                                <label for="myCheckbox">Правильный ответ</label>
+                                            {% endif %}
+                                            {% endif %}
                                             <div style="display: inline-block; background-color: beige; padding: 5px; border-radius: 5px; margin-bottom: 15px">
-                                                        <button type="button" class="btn btn-success btn-icon" style="line-height: 6px; width: 40px">
-                                                            <span class="icon">
-                                                                <i class="fa fa-heart" style="vertical-align: middle;"></i>
-                                                            </span>
-                                                        </button>
-                                                        <span style="margin-left: 1px; color: #ba2121">{{answer.rating_count}}</span>
-                                                        <button type="button" class="btn btn-danger btn-icon" style="line-height: 6px; width: 40px">
+                                                        <button type="button" class="btn btn-danger btn-icon dislike-btn" data-answer-id="{{ answer.id }}" style="line-height: 6px; width: 40px">
                                                             <span class="icon">
                                                                 <i class="fa fa-thumbs-down" style="vertical-align: middle;"></i>
+                                                            </span>
+                                                        </button>
+                                                        <span style="margin-left: 1px; color: #ba2121" id="rating-count-{{ answer.id }}">{{ answer.rating_count }}</span>
+                                                        <button type="button" class="btn btn-success btn-icon like-btn" data-answer-id="{{ answer.id }}" style="line-height: 6px; width: 40px">
+                                                            <span class="icon">
+                                                                <i class="fa fa-heart" style="vertical-align: middle;"></i>
                                                             </span>
                                                         </button>
                                                     </div>
@@ -62,8 +79,7 @@
                     <button class="btn btn-my" style="margin-top: 5px; margin-left: 760px;">Ответить</button>
                 </form>
             </div>
-            
 
 
-        </div>
+
 {% endblock %}

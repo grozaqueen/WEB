@@ -5,10 +5,12 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.urls import reverse
+from django.views.decorators.http import require_http_methods
 
 from .forms import LoginForm, RegisterForm, QuestionForm, AnswerForm, SettingsForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .models import Question, QuestionRating, Tag, Profile, AnswerRating, Answer
 
@@ -150,3 +152,49 @@ def exit(request):
     print("Kek")
     logout(request)
     return redirect(reverse('login'))
+
+def rate(request):
+    item_id = request.POST.get('item_id')
+    rate_type = request.POST.get('rate_type')
+    item_type = request.POST.get('item_type')
+    action = 'add'
+    search_obj = None
+    rating = 0
+
+    if item_type == 'answer':
+        item_obj = get_object_or_404(Answer, pk=item_id)
+        search_obj = AnswerRating.objects.search(item_obj, request.user.profile)
+    elif item_type == 'question':
+        item_obj = get_object_or_404(Question, pk=item_id)
+        search_obj = QuestionRating.objects.search(item_obj, request.user.profile)
+
+    if rate_type == 'like':
+        rating = 1
+    elif rate_type == 'dislike':
+        rating = -1
+
+    if search_obj is not None:
+        if search_obj.mark == rating:
+            search_obj.mark = 0
+        else:
+            search_obj.mark = rating
+        search_obj.save()
+    else:
+        if item_type == 'answer':
+            AnswerRating.objects.create(mark=rating, post=item_obj, profile=request.user.profile)
+        else:
+            QuestionRating.objects.create(mark=rating, post=item_obj, profile=request.user.profile)
+
+    return JsonResponse({'count': item_obj.rating_count()})
+
+@require_http_methods(['POST'])
+def correct(request):
+    answer_id = request.POST.get('answer_id')
+    is_correct = request.POST.get('is_correct')
+
+    answer = Answer.objects.get(pk=answer_id)
+    answer.is_correct = is_correct == 'true'
+    answer.save()
+
+    return JsonResponse({'message': 'Answer correctness updated successfully'})
+
