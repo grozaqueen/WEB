@@ -32,4 +32,6 @@ urlpatterns = [
     path('exit', views.exit, name='exit'),
     path('rate/', views.rate, name='rate'),
     path('correct/', views.correct, name='correct'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

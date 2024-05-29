@@ -84,28 +84,14 @@ class RegisterForm(forms.ModelForm):
         email = self.cleaned_data['email']
         password = self.cleaned_data['password']
         user = User.objects.create_user(username=username, email=email, password=password)
-
+        profile = Profile.objects.create(user = user)
         print("FILES:", self.files)  # Add this line
 
-        avatar = self.files.get('avatar')
-        if avatar:
-            # Save the uploaded avatar to the media directory
-            avatar_path = os.path.join(settings.STATIC_URL, 'avatars')
-
-            if not os.path.exists(avatar_path):
-                os.makedirs(avatar_path)
-            avatar_file_name = f"{self.cleaned_data['username']}_{avatar.name}"
-            avatar_file_path = os.path.join(avatar_path, avatar_file_name)
-            with open(avatar_file_path, 'wb+') as f:
-                for chunk in avatar.chunks():
-                    f.write(chunk)
-
-            # Save the avatar URL to the database
-            user_profile = Profile(avatar=f"avatars/{avatar_file_name}", user=user, login=self.cleaned_data['username'])
+        if self.cleaned_data.get('avatar') is None:
+            profile.avatar = None
         else:
-            # Use a default avatar if no file was uploaded
-            user_profile = Profile(avatar='avatar.jpg', user=user, login=self.cleaned_data['username'])
-        user_profile.save()
+            profile.avatar = self.cleaned_data.get('avatar')
+            profile.save()
         return user
 
     def clean(self):
@@ -258,29 +244,10 @@ class SettingsForm(forms.ModelForm):
         if 'nickname' in self.changed_data:
             profile.login = self.cleaned_data['nickname']
 
-        avatar = self.files.get('avatar')
+        avatar = self.cleaned_data.get('avatar')
         if avatar:
-            # Delete the old avatar if it exists
-            old_avatar_path = profile.avatar.path
-            if os.path.exists(old_avatar_path):
-                os.remove(old_avatar_path)
-
-            # Save the uploaded avatar to the media directory
-            avatar_path = os.path.join(settings.STATIC_URL, 'avatars')
-
-            if not os.path.exists(avatar_path):
-                os.makedirs(avatar_path)
-            avatar_file_name = f"{self.cleaned_data['username']}_{avatar.name}"
-            avatar_file_path = os.path.join(avatar_path, avatar_file_name)
-            with open(avatar_file_path, 'wb+') as f:
-                for chunk in avatar.chunks():
-                    f.write(chunk)
-
-            # Save the avatar URL to the database
-            profile.avatar=f"avatars/{avatar_file_name}"
-        else:
-            # Use a default avatar if no file was uploaded
-            profile.avatar = 'avatar.jpg'
-
-        profile.save()
+            profile = user.profile
+            profile.avatar = avatar
+            profile.save()
         user.save()
+        return user

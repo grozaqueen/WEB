@@ -9,7 +9,7 @@ from django.db.models.functions import Coalesce
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(null=True, blank=True, default='avatar.jpg', upload_to='avatars/')
+    avatar = models.ImageField(null=True, blank=True, default='avatar.jpg', upload_to='%Y/%m/%d/')
     login = models.CharField(max_length=30)
 
 
@@ -45,6 +45,22 @@ class Question(models.Model):
             tags.append(tag_list[i].tag)
         return tags
 
+    def check_good(self):
+        profiles_yes = []
+        ratings = QuestionRating.objects.all()
+        for rating in ratings:
+            if rating.mark == 1 and rating.post == self:
+                profiles_yes.append(rating.profile_id)
+        return profiles_yes
+
+    def check_bad(self):
+        profiles_no = []
+        ratings = QuestionRating.objects.all()
+        for rating in ratings:
+            if rating.mark == -1 and rating.post == self:
+                profiles_no.append(rating.profile_id)
+        return profiles_no
+
     def answers_count(self):
         return Answer.objects.list_answers_count(self.pk)
 
@@ -69,6 +85,22 @@ class Answer(models.Model):
     def rating_count(self):
         r_sum = AnswerRating.objects.filter(post=self).aggregate(Sum('mark'))
         return r_sum['mark__sum'] if r_sum['mark__sum'] is not None else 0
+
+    def check_good(self):
+        profiles_yes = []
+        ratings = AnswerRating.objects.all()
+        for rating in ratings:
+            if rating.mark == 1 and rating.post == self:
+                profiles_yes.append(rating.profile_id)
+        return profiles_yes
+
+    def check_bad(self):
+        profiles_no = []
+        ratings = AnswerRating.objects.all()
+        for rating in ratings:
+            if rating.mark == -1 and rating.post == self:
+                profiles_no.append(rating.profile_id)
+        return profiles_no
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.TextField()

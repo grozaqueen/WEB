@@ -157,7 +157,6 @@ def rate(request):
     item_id = request.POST.get('item_id')
     rate_type = request.POST.get('rate_type')
     item_type = request.POST.get('item_type')
-    action = 'add'
     search_obj = None
     rating = 0
 
@@ -180,10 +179,10 @@ def rate(request):
             search_obj.mark = rating
         search_obj.save()
     else:
-        if item_type == 'answer':
-            AnswerRating.objects.create(mark=rating, post=item_obj, profile=request.user.profile)
-        else:
+        if item_type == 'question':
             QuestionRating.objects.create(mark=rating, post=item_obj, profile=request.user.profile)
+        else:
+            AnswerRating.objects.create(mark=rating, post=item_obj, profile=request.user.profile)
 
     return JsonResponse({'count': item_obj.rating_count()})
 

@@ -11,7 +11,6 @@ for (let item of likesQuestionsList) {
     const DislikeBtn = item.children[0].children[0].children[0];
     const Counter = item.children[0].children[0].children[1];
     const LikeBtn = item.children[0].children[0].children[2];
-
     DislikeBtn.addEventListener('click', () => {
         const bodyReq = new FormData();
         bodyReq.append('item_id', item.dataset.id);
@@ -28,10 +27,17 @@ for (let item of likesQuestionsList) {
             .then((response) => response.json())
             .then((data) => {
                 Counter.innerHTML = data.count;
-                if (data.count < 0)
-                    Counter.style.color = "red";
-                else
-                    Counter.style.color = "green";
+                if (item.children[0].children[0].children[0].children[0].querySelector("i").style.color == "white" && item.children[0].children[0].children[2].children[0].querySelector("i").style.color == "darkgreen")
+                {
+                    item.children[0].children[0].children[0].children[0].querySelector("i").style.color = "darkred";
+                    item.children[0].children[0].children[2].children[0].querySelector("i").style.color = "white"
+                }
+                else if (item.children[0].children[0].children[0].children[0].querySelector("i").style.color == "white" && item.children[0].children[0].children[2].children[0].querySelector("i").style.color == "white"){
+                    item.children[0].children[0].children[0].children[0].querySelector("i").style.color = "darkred";
+                }
+                else {
+                    item.children[0].children[0].children[0].children[0].querySelector("i").style.color = "white";
+                }
             })
     });
 
@@ -51,11 +57,17 @@ for (let item of likesQuestionsList) {
             .then((response) => response.json())
             .then((data) => {
                 Counter.innerHTML = data.count;
-                if (data.count >= 0)
-                    Counter.style.color = "green";
-                else
-                    Counter.style.color = "red";
-
+                if (item.children[0].children[0].children[2].children[0].querySelector("i").style.color == "white" && item.children[0].children[0].children[0].children[0].querySelector("i").style.color == "darkred")
+                {
+                    item.children[0].children[0].children[2].children[0].querySelector("i").style.color = "darkgreen";
+                    item.children[0].children[0].children[0].children[0].querySelector("i").style.color = "white"
+                }
+                else if (item.children[0].children[0].children[2].children[0].querySelector("i").style.color == "white" && item.children[0].children[0].children[0].children[0].querySelector("i").style.color == "white"){
+                        item.children[0].children[0].children[2].children[0].querySelector("i").style.color = "darkgreen";
+                    }
+                else {
+                    item.children[0].children[0].children[2].children[0].querySelector("i").style.color = "white";
+                }
             })
     });
 }
@@ -82,10 +94,17 @@ for (let item of likesAnswerList) {
       .then((response) => response.json())
       .then((data) => {
         counter.innerHTML = data.count;
-        if (data.count >= 0)
-          counter.style.color = "green";
-        else
-          counter.style.color = "red";
+        if (item.children[0].children[2].children[2].children[0].querySelector("i").style.color == "white" && item.children[0].children[2].children[0].children[0].querySelector("i").style.color == "darkred")
+                {
+                    item.children[0].children[2].children[2].children[0].querySelector("i").style.color = "darkgreen";
+                    item.children[0].children[2].children[0].children[0].querySelector("i").style.color = "white"
+                }
+        else if (item.children[0].children[2].children[2].children[0].querySelector("i").style.color == "white" && item.children[0].children[2].children[0].children[0].querySelector("i").style.color == "white"){
+            item.children[0].children[2].children[2].children[0].querySelector("i").style.color = "darkgreen";
+        }
+                else {
+                    item.children[0].children[2].children[2].children[0].querySelector("i").style.color = "white";
+                }
       })
   });
 
@@ -105,10 +124,17 @@ for (let item of likesAnswerList) {
       .then((response) => response.json())
       .then((data) => {
         counter.innerHTML = data.count;
-        if (data.count < 0)
-          counter.style.color = "red";
-        else
-          counter.style.color = "green";
+        if (item.children[0].children[2].children[0].children[0].querySelector("i").style.color == "white" && item.children[0].children[2].children[2].children[0].querySelector("i").style.color == "darkgreen")
+                {
+                    item.children[0].children[2].children[0].children[0].querySelector("i").style.color = "darkred";
+                    item.children[0].children[2].children[2].children[0].querySelector("i").style.color = "white"
+                }
+                else if (item.children[0].children[2].children[0].children[0].querySelector("i").style.color == "white" && item.children[0].children[2].children[2].children[0].querySelector("i").style.color == "white"){
+                    item.children[0].children[2].children[0].children[0].querySelector("i").style.color = "darkred";
+                }
+                else {
+                    item.children[0].children[2].children[0].children[0].querySelector("i").style.color = "white";
+                }
       })
   });
 }

@@ -15,7 +15,7 @@
                                             <img src="{% static '/avatar.jpg'%}" height="110px" width="110px"
                                         style="border: 1px solid black; object-fit: cover; margin-top: 20px; margin-bottom: 20px; margin-left: 2px;">
                                         {% else %}
-                                            <img src="{% static answer.profile.avatar %}" height="110px" width="110px"
+                                            <img src="{{ answer.profile.avatar.url }}" height="110px" width="110px"
                                         style="border: 1px solid black; object-fit: cover; margin-top: 20px; margin-bottom: 20px; margin-left: 2px;">
                                         {% endif %}
                                 </div>
@@ -50,17 +50,43 @@
                                             {% endif %}
                                             {% endif %}
                                             <div style="display: inline-block; background-color: beige; padding: 5px; border-radius: 5px; margin-bottom: 15px">
+                                                    {% if request.user.profile.id in answer.check_good%}
                                                         <button type="button" class="btn btn-danger btn-icon dislike-btn" data-answer-id="{{ answer.id }}" style="line-height: 6px; width: 40px">
                                                             <span class="icon">
-                                                                <i class="fa fa-thumbs-down" style="vertical-align: middle;"></i>
+                                                                <i class="fa fa-thumbs-down" style="vertical-align: middle; color: white"></i>
                                                             </span>
                                                         </button>
                                                         <span style="margin-left: 1px; color: #ba2121" id="rating-count-{{ answer.id }}">{{ answer.rating_count }}</span>
                                                         <button type="button" class="btn btn-success btn-icon like-btn" data-answer-id="{{ answer.id }}" style="line-height: 6px; width: 40px">
                                                             <span class="icon">
-                                                                <i class="fa fa-heart" style="vertical-align: middle;"></i>
+                                                                <i class="fa fa-heart" style="vertical-align: middle; color: darkgreen"></i>
                                                             </span>
                                                         </button>
+                                                    {% elif request.user.profile.id in answer.check_bad%}
+                                                            <button type="button" class="btn btn-danger btn-icon dislike-btn" data-answer-id="{{ answer.id }}" style="line-height: 6px; width: 40px">
+                                                                <span class="icon">
+                                                                    <i class="fa fa-thumbs-down" style="vertical-align: middle; color: darkred"></i>
+                                                                </span>
+                                                            </button>
+                                                            <span style="margin-left: 1px; color: #ba2121" id="rating-count-{{ answer.id }}">{{ answer.rating_count }}</span>
+                                                            <button type="button" class="btn btn-success btn-icon like-btn" data-answer-id="{{ answer.id }}" style="line-height: 6px; width: 40px">
+                                                                <span class="icon">
+                                                                    <i class="fa fa-heart" style="vertical-align: middle; color: white"></i>
+                                                                </span>
+                                                            </button>
+                                                    {% else %}
+                                                            <button type="button" class="btn btn-danger btn-icon dislike-btn" data-answer-id="{{ answer.id }}" style="line-height: 6px; width: 40px">
+                                                                <span class="icon">
+                                                                    <i class="fa fa-thumbs-down" style="vertical-align: middle; color: white"></i>
+                                                                </span>
+                                                            </button>
+                                                            <span style="margin-left: 1px; color: #ba2121" id="rating-count-{{ answer.id }}">{{ answer.rating_count }}</span>
+                                                            <button type="button" class="btn btn-success btn-icon like-btn" data-answer-id="{{ answer.id }}" style="line-height: 6px; width: 40px">
+                                                                <span class="icon">
+                                                                    <i class="fa fa-heart" style="vertical-align: middle; color: white"></i>
+                                                                </span>
+                                                            </button>
+                                                    {% endif %}
                                                     </div>
                                             </div>
                                         </div>
